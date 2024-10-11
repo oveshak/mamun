@@ -95,7 +95,7 @@ class Index(CommonMixin,Cart ,TemplateView):
 
 
 
-class Shop(Cart,TemplateView):
+class Shop(CommonMixin,Cart,TemplateView):
     template_name = "temp/shop.html"
 
     def get_context_data(self, **kwargs):
@@ -135,7 +135,7 @@ class Shop(Cart,TemplateView):
     
 
 
-class CheckOut(Cart, TemplateView):
+class CheckOut(CommonMixin,Cart, TemplateView):
     template_name = "temp/Checkout.html"
 
     def post(self, request, *args, **kwargs):
