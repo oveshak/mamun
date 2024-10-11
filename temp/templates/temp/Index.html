@@ -160,7 +160,7 @@
 					</div>
 					<div class="addToCart">
 						{% if product.product_quantity > 0 %}
-							<button>Order Now</button>
+            <a href="{% url 'single-product' slug=product.slug %}"><button>Order Now</button></a>
 						{% else %}
 							<button disabled>Out of Stock</button>  <!-- Optional: Disable button and show message -->
 						{% endif %}
@@ -201,7 +201,7 @@
 				  </div>
 				  <div class="addToCart">
 					{% if product.product_quantity > 0 %}
-						<button>Order Now</button>
+          <a href="{% url 'single-product' slug=product.slug %}"><button>Order Now</button></a>
 					{% else %}
 						<button disabled>Out of Stock</button>  <!-- Optional: Disable button and show message -->
 					{% endif %}

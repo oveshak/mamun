@@ -61,58 +61,64 @@
 				In Stock <span style="color: red">(only {{ product.product_quantity }} copies left)</span>
 			</div>
 			
-			<div class="d-flex align-items-center gg-10 mt-3">
-				<!-- Quantity -->
-				<input class="form-control" id="quantityInput" type="number" min="1" value="1" style="width: 60px" />
-			
-				<!-- Add to cart button -->
-				<button class="btn_common d-block text-center capitalize" id="addToCartButton" style="width: 220px" onclick="addToCart('{{ product.id }}')">
-					Add to cart
-				</button>
-			
-				<!-- Add to Wishlist -->
-				<button class="d-block btn-read read-more d-none d-sm-block d-lg-block d-md-block" type="button">
-					More Info
-				</button>
-			</div>
-			
-			<script>
-				// Disable the Add to Cart button if the product quantity is 0
-				document.addEventListener('DOMContentLoaded', function () {
-					const productQuantity = {{ product.product_quantity }};
-					const addToCartButton = document.getElementById('addToCartButton');
-			
-					if (productQuantity <= 0) {
-						addToCartButton.disabled = true;
-						addToCartButton.textContent = "Out of Stock"; // Optionally change the button text
-					} else {
-						addToCartButton.disabled = false;
-						addToCartButton.textContent = "Add to Cart"; // Reset the button text if in stock
-					}
-				});
-			
-				function addToCart(productId) {
-					const quantity = document.getElementById('quantityInput').value;
-			
-					fetch("{% url 'add_to_cart' %}", {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-							'X-CSRFToken': '{{ csrf_token }}'
-						},
-						body: JSON.stringify({ 'product_id': productId, 'quantity': quantity })
-					})
-					.then(response => response.json())
-					.then(data => {
-						if (data.message) {
-							alert(data.message);
-						} else {
-							alert('Error adding product to cart');
-						}
-					})
-					.catch(error => console.error('Error:', error));
-				}
-			</script>
+      <div class="d-flex align-items-center gg-10 mt-3">
+        <!-- Quantity -->
+        <input class="form-control" id="quantityInput" type="number" min="1" value="1" style="width: 60px" />
+        
+        <!-- Add to cart button -->
+        <a href="{% url 'checkout' %}">
+            <button class="btn_common d-block text-center capitalize" id="addToCartButton" style="width: 220px" onclick="addToCart('{{ product.id }}')">
+                Add to Cart
+            </button>
+        </a>
+        
+        <!-- Add to Wishlist -->
+        <button class="d-block btn-read read-more d-none d-sm-block d-lg-block d-md-block" type="button">
+            More Info
+        </button>
+    </div>
+    
+    <script>
+        // Disable the Add to Cart button if the product quantity is 0
+        document.addEventListener('DOMContentLoaded', function () {
+            const productQuantity = {{ product.product_quantity }};
+            const addToCartButton = document.getElementById('addToCartButton');
+    
+            if (productQuantity <= 0) {
+                addToCartButton.disabled = true;
+                addToCartButton.textContent = "Out of Stock"; // Optionally change the button text
+            } else {
+                addToCartButton.disabled = false;
+                addToCartButton.textContent = "Add to Cart"; // Reset the button text if in stock
+            }
+        });
+    
+        function addToCart(productId) {
+            const quantity = document.getElementById('quantityInput').value;
+    
+            fetch("{% url 'add_to_cart' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ 'product_id': productId, 'quantity': quantity })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message); // Show success message
+                    setTimeout(function() {
+                        window.location.reload(); // Reload the page after 1 second
+                    }, 1000);
+                } else {
+                    alert('Error adding product to cart');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+    
 			
 			
 			
