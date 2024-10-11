@@ -1,0 +1,464 @@
+{% load static %}
+
+<header class="header">
+    <div class="container-fluid px-5 relative">
+      <div class="header-bottom">
+        <div class="row align-items-center">
+          <div class="col-6 lg-sc">
+            <!-- Logo  -->
+            <div class="logoWrap d-inline-block">
+              <a href="index.html">
+                <img
+                  src="https://banner2.cleanpng.com/20180926/qau/kisspng-computer-icons-scalable-vector-graphics-applicatio-tynor-wrist-splint-ambidextrous-rs-274-wrist-s-5bac3149dcb297.944285061538011465904.jpg"
+                  alt="logo"
+                />
+              </a>
+            </div>
+            <div class="relative d-inline-block">
+              <!-- Sticky Mobile Menu Togglar -->
+              <div class="sticky-active-menu">
+                <button class="menu-bars" onclick="activeMenu();">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 lg-sc">
+            <!-- Meta Options  -->
+            <div class="headerMeta d-flex">
+              <div class="ht-item cart__header">
+                <div class="navbar-tool me-2">
+                  <a
+                    class="navbar-tool-icon-box"
+                    href={% url 'checkout' %}
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#shoppingCart"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="icon icon-tabler icon-tabler-shopping-cart"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      stroke-width="1"
+                      stroke="#4a4b65"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        stroke="none"
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      ></path>
+                      <circle cx="6" cy="19" r="2"></circle>
+                      <circle cx="17" cy="19" r="2"></circle>
+                      <path d="M17 17h-11v-14h-2"></path>
+                      <path d="M6 5l14 1l-1 7h-13"></path>
+                    </svg>
+                    <span class="navbar-tool-badge">{{ cart|length }}</span></a
+                  >
+                </div>
+              </div>
+              {% comment %} <div class="ht-item wishlist__header">
+                <div class="navbar-tool">
+                  <a
+                    class="navbar-tool-icon-box"
+                    href="#"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target=""
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="icon icon-tabler icon-tabler-heart"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      stroke-width="1"
+                      stroke="#4a4b65"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        stroke="none"
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      ></path>
+                      <path
+                        d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"
+                      ></path>
+                    </svg>
+                    <span class="navbar-tool-badge">0</span></a
+                  >
+                </div>
+              </div>
+
+              <div class="ht-item sign__in">
+                <div class="d-flex">
+                  <div class="user__menu d-flex">
+                    <div class="account">
+                      <a href="" class="login topbar-link">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-box-arrow-in-right rights"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"
+                          />
+                          <path
+                            fill-rule="evenodd"
+                            d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
+                          />
+                        </svg>
+
+                        Sign in</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div> {% endcomment %}
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="row srcboxRow-wrap">
+              <div class="col-2">
+                <!-- Sticky Mobile Menu Togglar -->
+                <div class="sticky-active-menu">
+                  <button class="menu-bars" onclick="activeMenu();">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="icon icon-tabler icon-tabler-align-justified"
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      stroke-width="1"
+                      stroke="#000"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        stroke="none"
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      ></path>
+                      <line x1="4" y1="6" x2="20" y2="6"></line>
+                      <line x1="4" y1="12" x2="20" y2="12"></line>
+                      <line x1="4" y1="18" x2="16" y2="18"></line>
+                    </svg>
+                    <!-- <span></span>
+                  <span></span>
+                  <span></span> -->
+                  </button>
+                </div>
+
+                <!-- null for space  -->
+              </div>
+              <div class="col-md-12 col-lg-9 col-8">
+                <!-- Logo  -->
+                <div class="logoWrap mb-sc me-5 d-inline-block">
+                  <a href="index.html">
+                    <img
+                      src="https://banner2.cleanpng.com/20180926/qau/kisspng-computer-icons-scalable-vector-graphics-applicatio-tynor-wrist-splint-ambidextrous-rs-274-wrist-s-5bac3149dcb297.944285061538011465904.jpg"
+                      alt="logo"
+                    />
+                  </a>
+                </div>
+                <!-- Search field -->
+
+
+
+              
+
+                <div class="srcBox">
+                    <form method="GET" action="">
+                        <div class="input-group headinput">
+                            <input
+                                type="text"
+                                class="txtSrc form-control"
+                                placeholder="Search Here..."
+                                name="search"
+                                value="{{ request.GET.search|default:'' }}"
+                            />
+                            <button type="submit" class="btn btn-outline-secondary">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+
+
+
+              <div class="col-2">
+                <div class="headerMeta hartandcartformob d-flex">
+                  <div class="ht-item cart__header">
+                    <div class="navbar-tool me-2">
+                      <a
+                        class="navbar-tool-icon-box"
+                        href="#"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#shoppingCart"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-shopping-cart"
+                          width="32"
+                          height="32"
+                          viewBox="0 0 24 24"
+                          stroke-width="1"
+                          stroke="#4a4b65"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path
+                            stroke="none"
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          ></path>
+                          <circle cx="6" cy="19" r="2"></circle>
+                          <circle cx="17" cy="19" r="2"></circle>
+                          <path d="M17 17h-11v-14h-2"></path>
+                          <path d="M6 5l14 1l-1 7h-13"></path>
+                        </svg>
+                        <span class="navbar-tool-badge">{{ cart|length }}</span></a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- null for spance  -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Start Megamenu  -->
+      <div id="mainMenu">
+        <ul class="navbar-nav MegaMenuWrap">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'shop' %}">shop</a>
+          </li>
+          <li class="nav-item dropdown has-megamenu">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                Categories
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="13"
+                    height="13"
+                    fill="currentColor"
+                    class="bi bi-chevron-down"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                    />
+                </svg>
+            </a>
+            <div class="dropdown-menu megamenu" role="menu">
+                <div class="row g-3">
+                    {% for category in categories %}
+                        <div class="col-lg-3 col-6">
+                            <div class="col-megamenu">
+                                <ul class="list-unstyled">
+                                    <li><strong>{{ category.name }}</strong></li>
+                                    {% for subcategory in category.subcategory.all %}
+                                        <li><a href="#">{{ subcategory.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </li>
+        
+
+
+         
+        </ul>
+      </div>
+    </div>
+
+    <div class="container-fluid p-0 m-0 stickybar">
+      <div class="row align-items-center">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-light">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#main_nav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="main_nav">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link" href={% url 'index' %}>Home </a>
+              </li>
+              <li class="nav-item dropdown has-megamenu">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  data-bs-toggle="dropdown"
+                >
+                  Shop Details
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="13"
+                    height="13"
+                    fill="currentColor"
+                    class="bi bi-chevron-down"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                    />
+                  </svg>
+                </a>
+                <div class="dropdown-menu megamenu" role="menu">
+                  <div class="row g-3">
+
+                   
+                    {% for cate in categories %}
+                            <div class="col-lg-3 col-6">
+                                
+                                <div class="col-megamenu">
+                                    <h6>{{ cate.name }}</h6>
+                                    <ul class="list-unstyled">
+                                        {% for subcate in cate.subcategory.all %}
+                                        <li><a href="?subcategory={{ subcate.slug }}">{{ subcate.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                           
+                            {% endfor %}
+
+
+                    {% comment %} <div class="col-lg-3 col-6">
+                      <div class="col-megamenu">
+                        <ul class="list-unstyled">
+                          <li><a href="#">কাজী নজরুল ইসলাম</a></li>
+                          <li><a href="#">নোমান আলী খান</a></li>
+                          <li><a href="#">মাওলা ব্রাদার্স</a></li>
+                          <li>
+                            <a href="#">সুনীল গঙ্গোপাধ্যায় (নীলল...)</a>
+                          </li>
+                          <li><a href="#">আহমদ ছফা</a></li>
+                          <li><a href="#">তামিম শাহরিয়ার সুবিন</a></li>
+                          <li><a href="#">চেতন ভগত</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                      <div class="col-megamenu">
+                        <ul class="list-unstyled">
+                          <li><a href="#">কাজী নজরুল ইসলাম</a></li>
+                          <li><a href="#">নোমান আলী খান</a></li>
+                          <li><a href="#">মাওলা ব্রাদার্স</a></li>
+                          <li>
+                            <a href="#">সুনীল গঙ্গোপাধ্যায় (নীলল...)</a>
+                          </li>
+                          <li><a href="#">আহমদ ছফা</a></li>
+                          <li><a href="#">তামিম শাহরিয়ার সুবিন</a></li>
+                          <li><a href="#">চেতন ভগত</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                      <div class="col-megamenu">
+                        <ul class="list-unstyled">
+                          <li><a href="#">কাজী নজরুল ইসলাম</a></li>
+                          <li><a href="#">নোমান আলী খান</a></li>
+                          <li><a href="#">মাওলা ব্রাদার্স</a></li>
+                          <li>
+                            <a href="#">সুনীল গঙ্গোপাধ্যায় (নীলল...)</a>
+                          </li>
+                          <li><a href="#">আহমদ ছফা</a></li>
+                          <li><a href="#">তামিম শাহরিয়ার সুবিন</a></li>
+                          <li><a href="#">চেতন ভগত</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                      <div class="col-megamenu">
+                        <ul class="list-unstyled">
+                          <li><a href="#">কাজী নজরুল ইসলাম</a></li>
+                          <li><a href="#">নোমান আলী খান</a></li>
+                          <li><a href="#">মাওলা ব্রাদার্স</a></li>
+                          <li>
+                            <a href="#">সুনীল গঙ্গোপাধ্যায় (নীলল...)</a>
+                          </li>
+                          <li><a href="#">আহমদ ছফা</a></li>
+                          <li><a href="#">তামিম শাহরিয়ার সুবিন</a></li>
+                          <li><a href="#">চেতন ভগত</a></li>
+                        </ul>
+                      </div>
+                    </div> {% endcomment %}
+                  </div>
+                </div>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href={% url 'checkout' %}> Checkout </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href={% url 'shop' %}> Shop </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"> Contact</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+</header>
+
+<section class="category__block__mbl d-none">
+    <div class="container">
+        <div class="cat__item">
+            {% for cate in categories %}
+            <a href="?category={{ cate.slug }}">{{ cate.name }}</a>
+            {% endfor %}
+        </div>
+        
+        
+      <div class="text-center pt-1 d-none">
+        <a href="" class="cat__all__mbl"
+          >সকল বিষয়
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon icon-tabler icon-tabler-arrow-narrow-right"
+            width="20"
+            height="15"
+            viewBox="0 0 24 24"
+            stroke-width="1"
+            stroke="#978fff"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M5 12l14 0"></path>
+            <path d="M15 16l4 -4"></path>
+            <path d="M15 8l4 4"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>

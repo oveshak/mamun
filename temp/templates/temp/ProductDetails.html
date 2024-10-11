@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <title>Single page</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'temp/css/bootstrap.min.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'temp/css/owl.carousel.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'temp/css/flexslider.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="{% static 'temp/css/custome-style.css' %}" />
+    <link rel="stylesheet" href="{% static 'temp/css/header.css' %}" />
+    <link rel="stylesheet" href="{% static 'temp/css/theme.css' %}" />
+    <link rel="stylesheet" href="{% static 'temp/css/authors.css' %}" />
+    <link rel="stylesheet" href="{% static 'temp/css/responsive.css' %}" />
+    <script src="{% static 'temp/js/jquery-3.6.0.min.js' %}"></script>
+  </head>
+
+  <body>
+    <!-- header -->
+   {% include "temp/header.html" %}
+
+    <!-- Product Hero  -->
+    <section class="ProductDetails pb-0 pt-4 my-5">
+		<div class="container shadow-lg">
+		  <div class="row g-5">
+			<div class="col-sm-12 col-md-5 grid">
+			  <div class="flexslider p-3">
+				<ul class="slides">
+				  <li data-thumb="{{ product.product_image.url }}">
+					<div class="thumb-image">
+					  <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" />
+					</div>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+			<div class="col-sm-12 col-md-7">
+			  <!-- Name -->
+			  <h4 style="color: #212121; font-size: 22px; font-weight: 500" class="Product-title">
+				{{ product.product_name }}
+			  </h4>
+			  <span><a href="" style="font-weight: 400; font-size: 16px">{{ product.product_description }}</a></span>
+			  <!-- Price -->
+			  <h3 style="color: #212121; font-weight: 400" class="product-price my-3">
+				TK. {{ product.product_price }}
+			  </h3>
+	  
+			  <div class="stock-status">
+				<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled" width="18" height="18" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+					<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+					<path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="currentColor"></path>
+				</svg>
+				In Stock <span style="color: red">(only {{ product.product_quantity }} copies left)</span>
+			</div>
+			
+			<div class="d-flex align-items-center gg-10 mt-3">
+				<!-- Quantity -->
+				<input class="form-control" id="quantityInput" type="number" min="1" value="1" style="width: 60px" />
+			
+				<!-- Add to cart button -->
+				<button class="btn_common d-block text-center capitalize" id="addToCartButton" style="width: 220px" onclick="addToCart('{{ product.id }}')">
+					Add to cart
+				</button>
+			
+				<!-- Add to Wishlist -->
+				<button class="d-block btn-read read-more d-none d-sm-block d-lg-block d-md-block" type="button">
+					More Info
+				</button>
+			</div>
+			
+			<script>
+				// Disable the Add to Cart button if the product quantity is 0
+				document.addEventListener('DOMContentLoaded', function () {
+					const productQuantity = {{ product.product_quantity }};
+					const addToCartButton = document.getElementById('addToCartButton');
+			
+					if (productQuantity <= 0) {
+						addToCartButton.disabled = true;
+						addToCartButton.textContent = "Out of Stock"; // Optionally change the button text
+					} else {
+						addToCartButton.disabled = false;
+						addToCartButton.textContent = "Add to Cart"; // Reset the button text if in stock
+					}
+				});
+			
+				function addToCart(productId) {
+					const quantity = document.getElementById('quantityInput').value;
+			
+					fetch("{% url 'add_to_cart' %}", {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'X-CSRFToken': '{{ csrf_token }}'
+						},
+						body: JSON.stringify({ 'product_id': productId, 'quantity': quantity })
+					})
+					.then(response => response.json())
+					.then(data => {
+						if (data.message) {
+							alert(data.message);
+						} else {
+							alert('Error adding product to cart');
+						}
+					})
+					.catch(error => console.error('Error:', error));
+				}
+			</script>
+			
+			
+			
+
+
+
+			</div>
+		  </div>
+		</div>
+	</section>
+	  
+    <!-- Info Tab  -->
+    <section class="tabsSection pb-0">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-12">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  data-bs-toggle="tab"
+                  href="#t_Details"
+                  >Details</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  href="#t_AdditionalInfo"
+                  >Additional info</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#t_Delivery"
+                  >Delivery</a
+                >
+              </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div id="t_Details" class="tab-pane active">
+                <br />
+                <p style="font-weight: 400">
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown
+                  printer took a galley of type and scrambled it to make a type
+                  specimen book.
+                </p>
+              </div>
+              <div id="t_AdditionalInfo" class="tab-pane fade"><br /></div>
+              <div id="t_Delivery" class="tab-pane fade">
+                <br />
+                <img
+                  style="height: 150px; width: 150px; border-radius: 50%"
+                  src="https://biddabikash.com/img/author/571bd4feb634_1247.jpg"
+                  alt=""
+                />
+                <p>
+                  <span>Poeit</span> Lorem Ipsum is simply dummy text of the
+                  printing and typesetting industry. Lorem Ipsum has been the
+                  industry's standard dummy text ever since the 1500s, when an
+                  unknown printer took a galley of type and scrambled it to make
+                  a type specimen book. ... Read More
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+	<section class="related__products">
+		<div class="container">
+		  <div class="row">
+			<div class="heading__h1 mb-3">Related Products</div>
+			{% for related_product in related_products %}
+			<div class="col-lg-3 col-6">
+			  <div class="shop__product__area">
+				<div class="shop__product__img">
+				  <a href="{% url 'single-product' related_product.slug %}">
+					<img class="w-100" src="{{ related_product.product_image.url }}" alt="{{ related_product.product_name }}" />
+				  </a>
+				  <p>{{ related_product.product_name }}</p>
+				</div>
+				<div class="ratings">
+				  <!-- Display ratings (if you have a rating system) -->
+				</div>
+				<div class="product__price">
+				  <span>TK {{ related_product.product_price }} (BDT)</span>
+				</div>
+			  </div>
+			</div>
+			{% endfor %}
+		  </div>
+		</div>
+	  </section>
+	  
+
+    <!--Footer  -->
+    <footer class="bg-light mt-5">
+      <div class="footer pt-4 px-5">
+        <div class="row">
+          <div class="col-md-4 col-lg-3">
+            <!-- Single widget  -->
+            <div class="footer-widget">
+              <img
+                class="mb-3"
+                style="max-height: 83px"
+                src="https://banner2.cleanpng.com/20180926/qau/kisspng-computer-icons-scalable-vector-graphics-applicatio-tynor-wrist-splint-ambidextrous-rs-274-wrist-s-5bac3149dcb297.944285061538011465904.jpg"
+                alt=""
+              />
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Modi
+                rem consequuntur tenetur molestias repellendus quia dicta. Minus
+                iusto doloremque maxime.
+              </p>
+
+              <nav class="nav social social-white text-md-end">
+                <a
+                  href="https://www.facebook.com/"
+                  target="_blank"
+                  class="facebook me-3"
+                  ><i style="color: #383838" class="bi bi-facebook"></i
+                ></a>
+                <a
+                  href="https://twitter.com/"
+                  class="twitter me-3"
+                  target="_blank"
+                  ><i style="color: #383838" class="bi bi-twitter"></i
+                ></a>
+                <a
+                  href="https://www.youtube.com/"
+                  target="_blank"
+                  class="youtube me-3"
+                  ><i style="color: #383838" class="bi bi-youtube"></i
+                ></a>
+              </nav>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-3">
+            <!-- Single widget  -->
+            <div class="footer-widget">
+              <h4
+                style="
+                  color: #4a4b65;
+                  border-bottom: 1px solid #e9e9e9;
+                  padding: 10px 0;
+                "
+                class="widget-title"
+              >
+                Company Details
+              </h4>
+              <ul class="widget-menu p-0">
+                <li class="widget-menu-item">
+                  <a class="widget-menu-list" href="#">About Us</a>
+                </li>
+                <li class="widget-menu-item">
+                  <a class="widget-menu-list" href="#">Contact Us</a>
+                </li>
+                <li class="widget-menu-item">
+                  <a class="widget-menu-list" href="#">Terms of Use</a>
+                </li>
+                <li class="widget-menu-item">
+                  <a class="widget-menu-list" href="#">Privacy Policy</a>
+                </li>
+                <li class="widget-menu-item">
+                  <a class="widget-menu-list" href="#">Happy Return</a>
+                </li>
+                <li class="widget-menu-item">
+                  <a class="widget-menu-list" href="#">Refund Policy</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-3">
+            <!-- Single widget  -->
+            <div class="footer-widget">
+              <h4
+                style="
+                  color: #4a4b65;
+                  border-bottom: 1px solid #e9e9e9;
+                  padding: 10px 0;
+                "
+                class="widget-title"
+              >
+                Customer Panel
+              </h4>
+
+              <ul class="widget-menu p-0">
+                <li class="widget-menu-item">
+                  <a class="widget-menu-list" href="#">My Account</a>
+                </li>
+                <li class="widget-menu-item">
+                  <a class="widget-menu-list" href="#">Profile Update</a>
+                </li>
+                <li class="widget-menu-item">
+                  <a class="widget-menu-list" href="#">My Orders</a>
+                </li>
+                <li class="widget-menu-item">
+                  <a class="widget-menu-list" href="#">My Reviews</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-3">
+            <!-- Single widget  -->
+            <div class="footer-widget">
+              <h4
+                style="
+                  color: #4a4b65;
+                  border-bottom: 1px solid #e9e9e9;
+                  padding: 10px 0;
+                "
+                class="widget-title"
+              >
+                Get in Touch
+              </h4>
+
+              <ul class="widget-menu p-0">
+                <li class="widget-menu-item">
+                  <a class="widget-menu-list" href="#">
+                    <i class="bi bi-geo-alt"></i> Head Office</a
+                  >
+                  <br />
+                  <a class="widget-menu-list" href=""
+                    >45 Banglabazar, Dhaka-1100</a
+                  >
+                </li>
+                <li class="widget-menu-item">
+                  <a class="widget-menu-list" href="#">
+                    <i class="bi bi-phone"></i> Phone</a
+                  >
+                  <br />
+                  <a class="widget-menu-list" href=""
+                    >01711-101010, 01711-202020</a
+                  >
+                </li>
+                <li class="widget-menu-item">
+                  <a class="widget-menu-list" href="#">
+                    <i class="bi bi-envelope"></i> Email</a
+                  >
+                  <br />
+                  <a class="widget-menu-list" href=""
+                    >biddabikash.publication@gmail.com</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="row border-top pt-4 pb-0 mb-0">
+          <div class="d-md-flex align-items-center justify-content-between">
+            <p class="mb-lg-0">
+              © 2023 <a href="/">Ecommerce Site</a>. All rights reserved.
+            </p>
+            <p>
+              Developed with
+              <i style="max-height: 27px" height="50" class="bi bi-heart"></i>
+              by
+              <a href="" target="_blank">
+                <img
+                  src="https://news2.de2233.com/img/brand_icon_d.png"
+                  height="50"
+                  alt=""
+                  class="mx-2"
+                  style="max-height: 27px"
+              /></a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="mobileFooter fixed-bottom">
+            <div class="f-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon icon-tabler icon-tabler-home"
+                width="30"
+                height="44"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="#9e9e9e"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+              </svg>
+              <p>Home</p>
+            </div>
+
+            <div class="f-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon icon-tabler icon-tabler-layout-grid"
+                width="30"
+                height="44"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="#9e9e9e"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path
+                  d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"
+                />
+                <path
+                  d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"
+                />
+                <path
+                  d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"
+                />
+                <path
+                  d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"
+                />
+              </svg>
+              <p>Categories</p>
+            </div>
+
+            <div class="f-icon badges">
+              <img
+                style="width: 30px; padding-bottom: 5px; padding-top: 10px"
+                src="https://biddabikash.com/img/shopping-bag.png"
+                alt=""
+              />
+              <span class="navbar-tool-badge">0</span>
+
+              <p>Cart</p>
+            </div>
+
+            <div class="f-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon icon-tabler icon-tabler-user"
+                width="30"
+                height="44"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="#9e9e9e"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+              </svg>
+              <p>Account</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Cart Offcanvas  -->
+    <div class="cart-offcanvas" id="offcanvas">
+      <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel" class="capitalize text-white m-0">
+          Your Cart
+        </h5>
+        <button type="button" class="btn-closeOffcanvas btn btn-danger">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="content">
+          <!-- Empty message  -->
+          <div class="empty-content d-none">
+            <p class="text-center">Your shopping cart is empty!</p>
+          </div>
+          <!-- Cart item list  -->
+          <div class="offcanvas-Cart-item">
+            <div class="image">
+              <img src="images/cartitem1.png" alt="img" />
+            </div>
+            <div class="info">
+              <div class="name">
+                MSI G2412 23.8" FHD 170Hz IPS 1ms FreeSync Premium Gaming
+                Monitor
+              </div>
+              <span class="fw-5">0.00</span>
+              <span class="fw-5"><i class="bi bi-x"></i></span>
+              <span class="fw-5">1</span>
+              <span class="eq">=</span>
+              <span class="fw-5">0.00</span>
+            </div>
+            <button class="btnRemove-cartItem" title="Remove">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </div>
+          <!-- Cart item list  -->
+          <div class="offcanvas-Cart-item">
+            <div class="image">
+              <img src="images/cartitem1.png" alt="img" />
+            </div>
+            <div class="info">
+              <div class="name">
+                MSI G2412 23.8" FHD 170Hz IPS 1ms FreeSync Premium Gaming
+                Monitor
+              </div>
+              <span class="fw-5">0.00</span>
+              <span class="fw-5"><i class="bi bi-x"></i></span>
+              <span class="fw-5">1</span>
+              <span class="eq">=</span>
+              <span class="fw-5">0.00</span>
+            </div>
+            <button class="btnRemove-cartItem" title="Remove">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </div>
+        </div>
+        <div class="offCanvasBottom">
+          <div class="promotion-code">
+            <div class="input-group mb-4">
+              <input
+                type="text"
+                placeholder="Promo Code"
+                id="input-cart-coupon"
+              />
+              <span class="input-group-btn"
+                ><button
+                  class="button-coupon btn-common d-block text-center capitalize"
+                  type="submit"
+                >
+                  Apply
+                </button></span
+              >
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center px-2">
+            <h6 class="m-0">Sub-Total</h6>
+            <div class="amount fw-bold">0.00</div>
+          </div>
+          <hr />
+          <div
+            class="d-flex justify-content-between align-items-center px-2 mb-4"
+          >
+            <h6 class="m-0">Total</h6>
+            <div class="amount fw-bold">0.00</div>
+          </div>
+          <button class="btnCheckout btn-common d-block text-center capitalize">
+            Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- TO-TOP BUTTON -->
+    <!--===================================================-->
+    <button id="to-top">
+      <i class="fas fa-angle-up"></i>
+    </button>
+
+    <script src="{% static 'temp/js/jquery.min.js' %}"></script>
+    <script src="{% static 'temp/js/jquery.flexslider.js' %}"></script>
+    <script src="{% static 'temp/js/imagezoom.js' %}"></script>
+    <script src="{% static 'temp/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'temp/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'temp/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'temp/js/fontawesome-all.min.js' %}"></script>
+    <script src="{% static 'temp/js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'temp/js/main.js' %}"></script>
+
+    <script>
+      //  li item hover effect
+      $(document).ready(function () {
+        // When hovering over an li item
+        $("li").hover(
+          function () {
+            // Show the corresponding mega menu
+            $(this).find(".megamenu").stop(true, true).slideDown("fast");
+          },
+          function () {
+            // Hide the mega menu when the mouse leaves
+            $(this).find(".megamenu").stop(true, true).slideUp("fast");
+          }
+        );
+      });
+    </script>
+
+    <script>
+      $("#clientsBook .owl-carousel").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        responsive: {
+          0: {
+            items: 3,
+          },
+          600: {
+            items: 3,
+          },
+          1000: {
+            items: 6,
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

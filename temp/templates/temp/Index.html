@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+	{% load static %}
+  <head>
+    <title>Ecommerce Site</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'temp/css/bootstrap.min.css' %}" />
+    <!-- <link rel="stylesheet" href="{% static 'temp/css/owl.carousel.min.css' %}"> -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="{% static 'temp/css/custome-style.css' %}" />
+    <link rel="stylesheet" href="{% static 'temp/css/header.css' %}" />
+    <link rel="stylesheet" href="{% static 'temp/css/theme.css' %}" />
+    <link rel="stylesheet" href="{% static 'temp/css/responsive.css' %}" />
+    <script src="{% static 'temp/js/jquery-3.6.0.min.js' %}"></script>
+    <!-- owl carousel cdn -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+      integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- owl carousel theme min css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+      integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- owl carousel css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"
+      integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+
+  <body>
+    <!-- header -->
+   
+{% include "temp/header.html" %}
+    <!-- Hero Section  -->
+    <section class="section__container pt-1 pb-0">
+		<div class="container-fluid">
+		   <div class="row">
+			  <div class="col-2">
+				 <!-- Null for space  -->
+			  </div>
+			  <div class="col-md-12 col-lg-12">
+				 <div class="banner__section">
+					<!-- Set up Carousel -->
+					<div class="BannerCarousel owl-carousel">
+					   <!-- Loop through sliders -->
+					   {% for slider in sliders.slider_item.all %}
+					   <div class="carouselItem">
+						  <img src="{{ slider.image.url }}" alt="{{ slider.title }}" />
+					   </div>
+					   {% endfor %}
+					</div>
+				 </div>
+			  </div>
+		   </div>
+		</div>
+	 </section>
+	 
+
+    <!-- image style section -->
+    <div class="image__style">
+      <div class="container-fluid">
+        <div class="row gx-0">
+          <div class="col-md-4">
+            <img
+              class="img__style w-100 rounded"
+              src="https://lzd-img-global.slatic.net/3rd/q/aHR0cHM6Ly9zdGF0aWMtMDEuZGFyYXouY29tLmJkL3AvYmNhZmU2NzI1MGIzOTE4MWRkMTIyODgyNmU1OWRkM2UuanBn_400x400q75.png_.webp"
+              alt=""
+            />
+            <h2
+              style="
+                text-align: center;
+                color: #dc3545;
+                font-weight: 600;
+                font-size: 20px;
+                margin-top: 20px;
+              "
+            >
+              SMART WATCH
+            </h2>
+          </div>
+          <div class="col-md-4">
+            <img
+              class="img__style w-100 rounded"
+              src="https://lzd-img-global.slatic.net/3rd/q/aHR0cHM6Ly9zdGF0aWMtMDEuZGFyYXouY29tLmJkL3AvNjc1YTRiNmIxYTM3ZTZhMzM0MGE1MjMzYzIxMjk4OWMuanBn_400x400q75.png_.webp"
+              alt=""
+            />
+            <h2
+              style="
+                text-align: center;
+                color: #dc3545;
+                font-weight: 600;
+                font-size: 20px;
+                margin-top: 20px;
+              "
+            >
+              SMART MOBILE
+            </h2>
+          </div>
+          <div class="col-md-4">
+            <img
+              class="img__style w-100 rounded"
+              src="https://lzd-img-global.slatic.net/3rd/q/aHR0cHM6Ly9zdGF0aWMtMDEuZGFyYXouY29tLmJkL3AvMmZhNDZlYmM5Mzc1ZmVkMjkxYzRhMWUxNDYxMWM4ODEuanBn_400x400q75.png_.webp"
+              alt=""
+            />
+            <h2
+              style="
+                text-align: center;
+                color: #dc3545;
+                font-weight: 600;
+                font-size: 20px;
+                margin-top: 20px;
+              "
+            >
+              CAMERA
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- section -->
+
+    <div style="background-color: #e9e9e9; padding: 50px" class="container-fluid px-3 mt-5">
+      <div class="row">
+        <div id="container__div">
+          <h1
+            style="text-align: center; color: #383838"
+            class="heading__h1 mb-5"
+          >
+            Hire More info
+          </h1>
+		  <div class="owl-carousel owl-theme">
+			{% for product in productss %}
+			<div class="item">
+				<div class="shop__product__area">
+					<div class="shop__product__img">
+						<a href="{% url 'single-product' slug=product.slug %}">  <!-- Update this link if you have a detail page -->
+							<img class="w-100" src="{{ product.product_image.url }}" alt="{{ product.product_name }}"/>
+						</a>
+						<p>{{ product.product_description }}</p>
+					</div>
+					<div class="ratings"></div>
+					<div class="product__price">
+						<span>TK {{ product.product_price }} (BDT)</span>
+					</div>
+					<div class="addToCart">
+						{% if product.product_quantity > 0 %}
+							<button>Order Now</button>
+						{% else %}
+							<button disabled>Out of Stock</button>  <!-- Optional: Disable button and show message -->
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+		
+		
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid px-3 mt-5">
+      <div id="container__div">
+        <h1 style="text-align: center; color: #383838" class="heading__h1 mb-5">
+          Here For You
+        </h1>
+		<div class="row">
+			{% for product in products %}
+			<div class="col-md-2">
+				<div class="shop__product__area">
+				  <div class="shop__product__img">
+					<a href="{% url 'single-product' slug=product.slug %}">
+					  <img
+						class="w-100"
+						src={{product.product_image.url}}
+						alt=""
+					/></a>
+					<p>
+					  {{product.product_description}}
+					</p>
+				  </div>
+				  <div class="ratings"></div>
+				  <div class="product__price">
+					<span>TK {{product.product_price}} (BDT) </span>
+				  </div>
+				  <div class="addToCart">
+					{% if product.product_quantity > 0 %}
+						<button>Order Now</button>
+					{% else %}
+						<button disabled>Out of Stock</button>  <!-- Optional: Disable button and show message -->
+					{% endif %}
+				</div>
+				</div>
+			  </div>
+			{% endfor %}
+		</div>
+		
+      </div>
+    </div>
+
+    <!--Footer  -->
+  {% include "temp/footer.html" %}
+
+    <script src="{% static 'temp/js/jquery.min.js' %}"></script>
+    <script src="{% static 'temp/js/jquery.flexslider.js' %}"></script>
+    <script src="{% static 'temp/js/imagezoom.js' %}"></script>
+    <script src="{% static 'temp/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'temp/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- <script src="{% static 'temp/js/owl.carousel.min.js' %}"></script> -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+      integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"
+      integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="{% static 'temp/js/fontawesome-all.min.js' %}"></script>
+    <script src="{% static 'temp/js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'temp/js/main.js' %}"></script>
+
+    <script>
+      //  li item hover effect
+      $(document).ready(function () {
+        // When hovering over an li item
+        $("li").hover(
+          function () {
+            // Show the corresponding mega menu
+            $(this).find(".megamenu").stop(true, true).slideDown("fast");
+          },
+          function () {
+            // Hide the mega menu when the mouse leaves
+            $(this).find(".megamenu").stop(true, true).slideUp("fast");
+          }
+        );
+      });
+    </script>
+
+    <script>
+      $("#slideone .owl-carousel").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        responsive: {
+          0: {
+            items: 1,
+          },
+          600: {
+            items: 2,
+          },
+          1000: {
+            items: 3,
+          },
+        },
+      });
+    </script>
+
+    <script>
+      $("#carousel__item__1 .owl-carousel").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        responsive: {
+          0: {
+            items: 2,
+          },
+          600: {
+            items: 2,
+          },
+          1000: {
+            items: 6,
+          },
+        },
+      });
+    </script>
+    <script>
+      $("#container__div .owl-carousel").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        responsive: {
+          0: {
+            items: 2,
+          },
+          600: {
+            items: 2,
+          },
+          1000: {
+            items: 6,
+          },
+        },
+      });
+    </script>
+
+
+	
+
+
+  </body>
+</html>

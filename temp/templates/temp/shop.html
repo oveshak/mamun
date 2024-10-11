@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <title>Shop</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'temp/css/bootstrap.min.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'temp/css/owl.carousel.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'temp/css/flexslider.css' %}" />
+    <link rel="stylesheet" href="{% static 'temp/css/shopProduct.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="{% static 'temp/css/custome-style.css' %}" />
+    <link rel="stylesheet" href="{% static 'temp/css/header.css' %}" />
+    <link rel="stylesheet" href="{% static 'temp/css/theme.css' %}" />
+    <link rel="stylesheet" href="{% static 'temp/css/responsive.css' %}" />
+    <link rel="stylesheet" href="{% static 'temp/css/authors.css' %}" />
+    <script src="{% static 'temp/js/jquery-3.6.0.min.js' %}"></script>
+  </head>
+
+  <body>
+    <!-- header -->
+    {% include "temp/header.html" %}
+
+    <div class="ProductsFilter_Wrap bg-offwhite pb-0 mt-3">
+      <div class="container-fluid px-3">
+        <div class="row">
+          <div class="col-md-12 col-lg-3">
+            <!-- Filter Wrapper  -->
+            <div id="filterWidget_wrap" class="filterWidget_wrap">
+              <div
+                class="filtreHeader d-flex justify-content-between align-items-center mb-4"
+              >
+                <h5 class="m-0">Filter</h5>
+                <button id="filterClose" class="m-0" onclick="filterHide();">
+                  <i class="bi bi-x-circle"></i>
+                </button>
+              </div>
+              <!-- Single Widget  -->
+			  <div class="widget">
+				<h4 class="widget-title">Shop by Categories</h4>
+				<form method="GET" action="." id="categoryFilterForm">
+				  <div class="filter_checkboxGroup">
+					<!-- Loop through categories -->
+					{% for category in categories %}
+					<div class="form-check d-block mb-2">
+					  <input
+						class="form-check-input"
+						type="checkbox"
+						id="ProductCat_{{ forloop.counter }}"
+						name="category"  
+						value="{{ category.id }}"
+						{% if category.id|stringformat:"s" in request.GET.category %}
+						  checked
+						{% endif %}
+						onchange="document.getElementById('categoryFilterForm').submit();"
+					  />
+					  <label class="form-check-label p-0 colors" for="ProductCat_{{ forloop.counter }}">
+						{{ category.name }}
+					  </label>
+					</div>
+					{% endfor %}
+				  </div>
+				</form>
+			  </div>
+			  
+			  
+			  
+			  
+			  
+
+			  
+
+              <!-- Single Widget  -->
+			  <div class="widget">
+				<h4 class="widget-title">Sort By</h4>
+				<form method="GET" action=".">
+				  <div class="filter_checkboxGroup">
+					<!-- Sort by Price High to Low -->
+					<div class="form-check d-block mb-2">
+					  <input
+						class="form-check-input"
+						type="radio"
+						name="sort"  
+						id="SortBy_one"
+						value="high_to_low"
+						{% if request.GET.sort == "high_to_low" %}  
+						  checked
+						{% endif %}
+						onchange="this.form.submit();"  
+					  />
+					  <label class="form-check-label p-0 colors" for="SortBy_one">
+						Price (High to Low)
+					  </label>
+					</div>
+					<!-- Sort by Price Low to High -->
+					<div class="form-check d-block mb-2">
+					  <input
+						class="form-check-input"
+						type="radio"
+						name="sort" 
+						id="SortBy_two"
+						value="low_to_high" 
+						{% if request.GET.sort == "low_to_high" %}  
+						  checked
+						{% endif %}
+						onchange="this.form.submit();"  
+					  />
+					  <label class="form-check-label p-0 colors" for="SortBy_two">
+						Price (Low to High)
+					  </label>
+					</div>
+				  </div>
+				  <!-- Optional submit button -->
+				  <!-- <button type="submit" class="btn btn-primary mt-3">Apply Sort</button> -->
+				</form>
+			  </div>
+			  
+              <!-- Single Widget  -->
+			  <div class="widget">
+				<h4 class="widget-title">In Stock</h4>
+				<form method="GET" action=".">
+					<div class="filter_checkboxGroup">
+						<!-- In Stock Checkbox -->
+						<div class="form-check d-block mb-2">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								id="InStock_one"
+								name="in_stock"  
+								value="true"  
+								{% if request.GET.in_stock == "true" %}  
+									checked
+								{% endif %}
+								onchange="this.form.submit();"  
+							/>
+							<label class="form-check-label p-0" for="InStock_one">
+								In Stock
+							</label>
+						</div>
+					</div>
+				</form>
+			</div>
+			
+			  
+
+
+
+             
+              <!-- Single Widget  -->
+              
+
+			  <div class="widget">
+				<h4 class="widget-title">Price Range</h4>
+				<form method="GET" id="priceFilterForm" action="."> <!-- Ensure action is set -->
+				  <div class="Range-wrapper py-3">
+					<div class="range-innerWrap">
+					  <div class="left-right-value">
+						<div class="left-value" id="left-value">0</div>
+						<div class="right-value" id="right-value">5000</div>
+					  </div>
+					  <div class="multi-range-slider">
+						<input
+						  type="range"
+						  min="0"
+						  max="5000"
+						  value="0"
+						  id="input-left"
+						  name="min_price"
+						  onchange="updatePriceValues(); autoSubmitForm();" 
+						/>
+						<input
+						  type="range"
+						  min="0"
+						  max="5000"
+						  value="5000"
+						  id="input-right"
+						  name="max_price"
+						  onchange="updatePriceValues(); autoSubmitForm();"  
+						/>
+						<div class="slider">
+						  <div class="track"></div>
+						  <div class="range"></div>
+						  <div class="thumb left"></div>
+						  <div class="thumb right"></div>
+						</div>
+					  </div>
+					  <div class="sliderTicks">
+						<span><span>0</span></span>
+						<span></span>
+						<span><span>25%</span></span>
+						<span></span>
+						<span><span>50%</span></span>
+						<span></span>
+						<span><span>75%</span></span>
+						<span></span>
+						<span><span>100%</span></span>
+					  </div>
+					</div>
+				  </div>
+				</form>
+			  </div>
+			  
+			  <script>
+				function updatePriceValues() {
+				  const minPrice = document.getElementById('input-left').value;
+				  const maxPrice = document.getElementById('input-right').value;
+				  document.getElementById('left-value').textContent = minPrice;
+				  document.getElementById('right-value').textContent = maxPrice;
+				}
+			  
+				function autoSubmitForm() {
+				  // Automatically submit the form whenever the price range changes
+				  document.getElementById('priceFilterForm').submit();
+				}
+			  </script>
+			  
+
+
+
+
+
+            </div>
+          </div>
+
+
+          <div class="col-md-12 col-lg-9">
+			<button id="filterToggler" onclick="filterToggler();">
+			  Filter <i class="bi bi-funnel"></i>
+			</button>
+		  
+			<div class="container-fluid px-3 mt-5 bg-light shadow-lg">
+			  <div class="row">
+				<div class="block__content shadow-0">
+				  <div class="d-flex justify-content-between category__heading">
+					<div class="category__title abss">
+					  <h5 class="mb-0"><b style="color: #383838">Shop Products</b></h5>
+					  <p
+						style="
+						  color: #383838;
+						  font-weight: 400;
+						  font-size: 16px;
+						  margin-top: 10px;
+						"
+					  >
+						Showing {{ products.count }} results
+					  </p>
+					</div>
+				  </div>
+				</div>
+		  
+				<!-- Loop through products -->
+				{% for product in products %}
+				<div class="col-lg-3 col-6">
+				  <div class="shop__product__area">
+					<div class="shop__product__img">
+					  <a href="{% url 'single-product' slug=product.slug %}">
+						<img class="w-100" src="{{ product.product_image.url }}" alt="{{ product.product_name }}"/>
+					  </a>
+					  <p>{{ product.product_name }}</p>
+					</div>
+					<div class="ratings"></div>
+					<div class="product__price">
+					  <span>TK {{ product.product_price }} (BDT)</span>
+					</div>
+					<div class="addToCart">
+						{% if product.product_quantity > 0 %}
+							<button>Order Now</button>
+						{% else %}
+							<button disabled>Out of Stock</button>  <!-- Optional: Disable button and show message -->
+						{% endif %}
+					</div>
+				  </div>
+				</div>
+				{% endfor %}
+			  </div>
+			</div>
+		  </div>
+		  
+
+		  
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Offcanvas  -->
+    <div class="cart-offcanvas" id="offcanvas">
+      <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel" class="capitalize text-white m-0">
+          Your Cart
+        </h5>
+        <button type="button" class="btn-closeOffcanvas btn btn-danger">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="content">
+          <!-- Empty message  -->
+          <div class="empty-content d-none">
+            <p class="text-center">Your shopping cart is empty!</p>
+          </div>
+          <!-- Cart item list  -->
+          <div class="offcanvas-Cart-item">
+            <div class="image">
+              <img src="images/cartitem1.png" alt="img" />
+            </div>
+            <div class="info">
+              <div class="name">
+                MSI G2412 23.8" FHD 170Hz IPS 1ms FreeSync Premium Gaming
+                Monitor
+              </div>
+              <span class="fw-5">0.00</span>
+              <span class="fw-5"><i class="bi bi-x"></i></span>
+              <span class="fw-5">1</span>
+              <span class="eq">=</span>
+              <span class="fw-5">0.00</span>
+            </div>
+            <button class="btnRemove-cartItem" title="Remove">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </div>
+          <!-- Cart item list  -->
+          <div class="offcanvas-Cart-item">
+            <div class="image">
+              <img src="images/cartitem1.png" alt="img" />
+            </div>
+            <div class="info">
+              <div class="name">
+                MSI G2412 23.8" FHD 170Hz IPS 1ms FreeSync Premium Gaming
+                Monitor
+              </div>
+              <span class="fw-5">0.00</span>
+              <span class="fw-5"><i class="bi bi-x"></i></span>
+              <span class="fw-5">1</span>
+              <span class="eq">=</span>
+              <span class="fw-5">0.00</span>
+            </div>
+            <button class="btnRemove-cartItem" title="Remove">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </div>
+        </div>
+        <div class="offCanvasBottom">
+          <div class="promotion-code">
+            <div class="input-group mb-4">
+              <input
+                type="text"
+                placeholder="Promo Code"
+                id="input-cart-coupon"
+              />
+              <span class="input-group-btn"
+                ><button
+                  class="button-coupon btn-common d-block text-center capitalize"
+                  type="submit"
+                >
+                  Apply
+                </button></span
+              >
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center px-2">
+            <h6 class="m-0">Sub-Total</h6>
+            <div class="amount fw-bold">0.00</div>
+          </div>
+          <hr />
+          <div
+            class="d-flex justify-content-between align-items-center px-2 mb-4"
+          >
+            <h6 class="m-0">Total</h6>
+            <div class="amount fw-bold">0.00</div>
+          </div>
+          <button class="btnCheckout btn-common d-block text-center capitalize">
+            Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- TO-TOP BUTTON -->
+    <!--===================================================-->
+    <button id="to-top">
+      <i class="fas fa-angle-up"></i>
+    </button>
+
+    <!--Footer  -->
+  {% include "temp/footer.html" %}
+
+    <!-- Cart Offcanvas  -->
+    <div class="cart-offcanvas" id="offcanvas">
+      <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel" class="capitalize text-white m-0">
+          Your Cart
+        </h5>
+        <button type="button" class="btn-closeOffcanvas btn btn-danger">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="content">
+          <!-- Empty message  -->
+          <div class="empty-content d-none">
+            <p class="text-center">Your shopping cart is empty!</p>
+          </div>
+          <!-- Cart item list  -->
+          <div class="offcanvas-Cart-item">
+            <div class="image">
+              <img src="images/cartitem1.png" alt="img" />
+            </div>
+            <div class="info">
+              <div class="name">
+                MSI G2412 23.8" FHD 170Hz IPS 1ms FreeSync Premium Gaming
+                Monitor
+              </div>
+              <span class="fw-5">0.00</span>
+              <span class="fw-5"><i class="bi bi-x"></i></span>
+              <span class="fw-5">1</span>
+              <span class="eq">=</span>
+              <span class="fw-5">0.00</span>
+            </div>
+            <button class="btnRemove-cartItem" title="Remove">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </div>
+          <!-- Cart item list  -->
+          <div class="offcanvas-Cart-item">
+            <div class="image">
+              <img src="images/cartitem1.png" alt="img" />
+            </div>
+            <div class="info">
+              <div class="name">
+                MSI G2412 23.8" FHD 170Hz IPS 1ms FreeSync Premium Gaming
+                Monitor
+              </div>
+              <span class="fw-5">0.00</span>
+              <span class="fw-5"><i class="bi bi-x"></i></span>
+              <span class="fw-5">1</span>
+              <span class="eq">=</span>
+              <span class="fw-5">0.00</span>
+            </div>
+            <button class="btnRemove-cartItem" title="Remove">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </div>
+        </div>
+        <div class="offCanvasBottom">
+          <div class="promotion-code">
+            <div class="input-group mb-4">
+              <input
+                type="text"
+                placeholder="Promo Code"
+                id="input-cart-coupon"
+              />
+              <span class="input-group-btn"
+                ><button
+                  class="button-coupon btn-common d-block text-center capitalize"
+                  type="submit"
+                >
+                  Apply
+                </button></span
+              >
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center px-2">
+            <h6 class="m-0">Sub-Total</h6>
+            <div class="amount fw-bold">0.00</div>
+          </div>
+          <hr />
+          <div
+            class="d-flex justify-content-between align-items-center px-2 mb-4"
+          >
+            <h6 class="m-0">Total</h6>
+            <div class="amount fw-bold">0.00</div>
+          </div>
+          <button class="btnCheckout btn-common d-block text-center capitalize">
+            Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- TO-TOP BUTTON -->
+    <!--===================================================-->
+    <button id="to-top">
+      <i class="fas fa-angle-up"></i>
+    </button>
+
+    <script src="{% static 'temp/js/jquery.min.js' %}"></script>
+    <script src="{% static 'temp/js/jquery.flexslider.js' %}"></script>
+    <script src="{% static 'temp/js/imagezoom.js' %}"></script>
+    <script src="{% static 'temp/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'temp/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'temp/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'temp/js/fontawesome-all.min.js' %}"></script>
+    <script src="{% static 'temp/js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'temp/js/main.js' %}"></script>
+
+    <script>
+      //  li item hover effect
+      $(document).ready(function () {
+        // When hovering over an li item
+        $("li").hover(
+          function () {
+            // Show the corresponding mega menu
+            $(this).find(".megamenu").stop(true, true).slideDown("fast");
+          },
+          function () {
+            // Hide the mega menu when the mouse leaves
+            $(this).find(".megamenu").stop(true, true).slideUp("fast");
+          }
+        );
+      });
+    </script>
+	
+  </body>
+</html>
