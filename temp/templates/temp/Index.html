@@ -40,6 +40,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   </head>
 
   <body>
@@ -192,7 +194,13 @@
                   .then(response => response.json())
                   .then(data => {
                       if (data.message) {
-                       
+                        Swal.fire({
+                          position: "center",
+                          icon: "success",
+                          title: "Add Cart Success",
+                          showConfirmButton: false,
+                          timer: 1500
+                        });
                           
                           // Reload the page immediately
                           window.location.reload(true);
@@ -267,6 +275,13 @@
                 .then(data => {
                     if (data.message) {
                      
+                      Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Add Cart Success",
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
                         
                         // Reload the page immediately
                         window.location.reload(true);
