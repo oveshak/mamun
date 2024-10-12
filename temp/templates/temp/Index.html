@@ -176,7 +176,7 @@
               </div>
               
               <script>
-              function addToCart(productId, quantity) {
+                function addToCart(productId, quantity) {
                   const orderNowButton = document.getElementById('orderNowButton');
                   
                   // Disable the button to prevent multiple clicks
@@ -194,18 +194,23 @@
                   .then(response => response.json())
                   .then(data => {
                       if (data.message) {
-                        Swal.fire({
-                          position: "center",
-                          icon: "success",
-                          title: "Add Cart Success",
-                          showConfirmButton: false,
-                          timer: 1500
-                        });
-                          
-                          // Reload the page immediately
-                          window.location.reload(true);
+                          // Show SweetAlert and wait for it to close before reloading
+                          Swal.fire({
+                              position: "center",
+                              icon: "success",
+                              title: "Add Cart Success",
+                              showConfirmButton: false,
+                              timer: 2500
+                          }).then(() => {
+                              // Reload the page after the alert closes
+                              window.location.reload(true);
+                          });
                       } else {
-                          alert('Error adding product to cart');
+                          Swal.fire({
+                              icon: "error",
+                              title: "Oops...",
+                              text: "Error adding product to cart",
+                          });
                           // Re-enable the button if there's an error
                           orderNowButton.disabled = false;
                           orderNowButton.textContent = "Order Now";
@@ -213,12 +218,17 @@
                   })
                   .catch(error => {
                       console.error('Error:', error);
-                      alert('An error occurred while adding the product to the cart');
+                      Swal.fire({
+                          icon: "error",
+                          title: "Oops...",
+                          text: "An error occurred while adding the product to the cart",
+                      });
                       // Re-enable the button if there's an error
                       orderNowButton.disabled = false;
                       orderNowButton.textContent = "Order Now";
                   });
               }
+              
               </script>
               </div>
             </div>
@@ -256,7 +266,7 @@
             </div>
             
             <script>
-            function addToCart(productId, quantity) {
+              function addToCart(productId, quantity) {
                 const orderNowButton = document.getElementById('orderNowButton');
                 
                 // Disable the button to prevent multiple clicks
@@ -274,19 +284,23 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.message) {
-                     
-                      Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Add Cart Success",
-                        showConfirmButton: false,
-                        timer: 1500
-                      });
-                        
-                        // Reload the page immediately
-                        window.location.reload(true);
+                        // Show SweetAlert and wait for it to close before reloading
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Add Cart Success",
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then(() => {
+                            // Reload the page after the alert closes
+                            window.location.reload(true);
+                        });
                     } else {
-                        alert('Error adding product to cart');
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Error adding product to cart",
+                        });
                         // Re-enable the button if there's an error
                         orderNowButton.disabled = false;
                         orderNowButton.textContent = "Order Now";
@@ -294,12 +308,17 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('An error occurred while adding the product to the cart');
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "An error occurred while adding the product to the cart",
+                    });
                     // Re-enable the button if there's an error
                     orderNowButton.disabled = false;
                     orderNowButton.textContent = "Order Now";
                 });
             }
+            
             </script>
             </div>
           </div>

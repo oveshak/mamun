@@ -113,19 +113,23 @@
           .then(response => response.json())
           .then(data => {
               if (data.message) {
-                  // Show success message (optional)
-                  
+                  // Show success message and wait for it to complete before reloading
                   Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "Add Cart Success",
-                    showConfirmButton: false,
-                    timer: 1500
+                      position: "center",
+                      icon: "success",
+                      title: "Add Cart Success",
+                      showConfirmButton: false,
+                      timer: 1500
+                  }).then(() => {
+                      // Reload the page after the alert closes
+                      window.location.reload(true);
                   });
-                  // Reload the page immediately
-                  window.location.reload(true);
               } else {
-                  alert('Error adding product to cart');
+                  Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: "Error adding product to cart",
+                  });
                   // Re-enable the button if there's an error
                   addToCartButton.disabled = false;
                   addToCartButton.textContent = "Add to Cart";
@@ -133,7 +137,11 @@
           })
           .catch(error => {
               console.error('Error:', error);
-              alert('An error occurred while adding the product to the cart');
+              Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "An error occurred while adding the product to the cart",
+              });
               // Re-enable the button if there's an error
               addToCartButton.disabled = false;
               addToCartButton.textContent = "Add to Cart";
