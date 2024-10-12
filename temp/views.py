@@ -8,21 +8,19 @@ from heroslider.models import HeroSlider
 
 
 
-# Create your views here.
 class Cart:
-     def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+        
         # Get the cart from the session
         cart = self.request.session.get('cart', {})
         context['cart'] = cart
-
+        
         # Calculate total price of the cart
         cart_total = sum(float(item['price']) * item['quantity'] for item in cart.values())
         context['cart_total'] = cart_total
-
+        
         return context
-
 
 
 
@@ -215,6 +213,7 @@ def add_to_cart(request):
         data = json.loads(request.body)
         product_id = data.get('product_id')
         quantity = int(data.get('quantity', 1))
+        request.session.modified = True 
 
         # Get the product
         try:

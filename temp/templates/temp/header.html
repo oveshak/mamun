@@ -30,12 +30,7 @@
             <div class="headerMeta d-flex">
               <div class="ht-item cart__header">
                 <div class="navbar-tool me-2">
-                  <a
-                    class="navbar-tool-icon-box"
-                    href={% url 'checkout' %}
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#shoppingCart"
-                  >
+                  <div class="navbar-tool-icon-box" id="shoppingCartIcon" role="button" tabindex="0">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="icon icon-tabler icon-tabler-shopping-cart"
@@ -58,10 +53,40 @@
                       <path d="M17 17h-11v-14h-2"></path>
                       <path d="M6 5l14 1l-1 7h-13"></path>
                     </svg>
-                    <span class="navbar-tool-badge">{{ cart|length }}</span></a
-                  >
+                    <span class="navbar-tool-badge">{{ cart|length }}</span>
+                  </div>
                 </div>
               </div>
+              
+              <script>
+              document.addEventListener('DOMContentLoaded', function() {
+                const shoppingCartIcon = document.getElementById('shoppingCartIcon');
+                
+                shoppingCartIcon.addEventListener('click', function(event) {
+                  event.preventDefault();
+                  
+                  // Check if the offcanvas element exists
+                  const offcanvasElement = document.getElementById('shoppingCart');
+                  
+                  if (offcanvasElement) {
+                    // If the offcanvas element exists, toggle it
+                    const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                    offcanvas.toggle();
+                  } else {
+                    // If the offcanvas doesn't exist, navigate to the checkout page
+                    window.location.href = "{% url 'checkout' %}";
+                  }
+                });
+              
+                // Add keyboard accessibility
+                shoppingCartIcon.addEventListener('keydown', function(event) {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    this.click();
+                  }
+                });
+              });
+              </script>
               {% comment %} <div class="ht-item wishlist__header">
                 <div class="navbar-tool">
                   <a
