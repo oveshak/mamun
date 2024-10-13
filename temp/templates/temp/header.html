@@ -363,89 +363,24 @@
                     />
                   </svg>
                 </a>
+          
                 <div class="dropdown-menu megamenu" role="menu">
                   <div class="row g-3">
-
-                   
-                    {% for cate in categories %}
-                            <div class="col-lg-3 col-6">
-                                
-                                <div class="col-megamenu">
-                                    <h6>{{ cate.name }}</h6>
-                                    <ul class="list-unstyled">
-                                        {% for subcate in cate.subcategory.all %}
-                                        <li><a href="?subcategory={{ subcate.slug }}">{{ subcate.name }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                                
-                            </div>
-                           
-                            {% endfor %}
-
-
-                    {% comment %} <div class="col-lg-3 col-6">
-                      <div class="col-megamenu">
-                        <ul class="list-unstyled">
-                          <li><a href="#">কাজী নজরুল ইসলাম</a></li>
-                          <li><a href="#">নোমান আলী খান</a></li>
-                          <li><a href="#">মাওলা ব্রাদার্স</a></li>
-                          <li>
-                            <a href="#">সুনীল গঙ্গোপাধ্যায় (নীলল...)</a>
-                          </li>
-                          <li><a href="#">আহমদ ছফা</a></li>
-                          <li><a href="#">তামিম শাহরিয়ার সুবিন</a></li>
-                          <li><a href="#">চেতন ভগত</a></li>
-                        </ul>
+                      {% for cate in categories %}
+                      <div class="col-lg-3 col-6">
+                          <div class="col-megamenu">
+                              <h6><a href="?category={{ cate.slug }}" class="category-link">{{ cate.name }}</a></h6>
+                              <ul class="list-unstyled">
+                                  {% for subcate in cate.subcategory.all %}
+                                  <li><a href="?category={{ cate.slug }}&subcategory={{ subcate.slug }}" class="subcategory-link">{{ subcate.name }}</a></li>
+                                  {% endfor %}
+                              </ul>
+                          </div>
                       </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                      <div class="col-megamenu">
-                        <ul class="list-unstyled">
-                          <li><a href="#">কাজী নজরুল ইসলাম</a></li>
-                          <li><a href="#">নোমান আলী খান</a></li>
-                          <li><a href="#">মাওলা ব্রাদার্স</a></li>
-                          <li>
-                            <a href="#">সুনীল গঙ্গোপাধ্যায় (নীলল...)</a>
-                          </li>
-                          <li><a href="#">আহমদ ছফা</a></li>
-                          <li><a href="#">তামিম শাহরিয়ার সুবিন</a></li>
-                          <li><a href="#">চেতন ভগত</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                      <div class="col-megamenu">
-                        <ul class="list-unstyled">
-                          <li><a href="#">কাজী নজরুল ইসলাম</a></li>
-                          <li><a href="#">নোমান আলী খান</a></li>
-                          <li><a href="#">মাওলা ব্রাদার্স</a></li>
-                          <li>
-                            <a href="#">সুনীল গঙ্গোপাধ্যায় (নীলল...)</a>
-                          </li>
-                          <li><a href="#">আহমদ ছফা</a></li>
-                          <li><a href="#">তামিম শাহরিয়ার সুবিন</a></li>
-                          <li><a href="#">চেতন ভগত</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                      <div class="col-megamenu">
-                        <ul class="list-unstyled">
-                          <li><a href="#">কাজী নজরুল ইসলাম</a></li>
-                          <li><a href="#">নোমান আলী খান</a></li>
-                          <li><a href="#">মাওলা ব্রাদার্স</a></li>
-                          <li>
-                            <a href="#">সুনীল গঙ্গোপাধ্যায় (নীলল...)</a>
-                          </li>
-                          <li><a href="#">আহমদ ছফা</a></li>
-                          <li><a href="#">তামিম শাহরিয়ার সুবিন</a></li>
-                          <li><a href="#">চেতন ভগত</a></li>
-                        </ul>
-                      </div>
-                    </div> {% endcomment %}
+                      {% endfor %}
                   </div>
-                </div>
+              </div>
+              
               </li>
 
               <li class="nav-item">
@@ -496,4 +431,9 @@
         </a>
       </div>
     </div>
+
+   
+    
+    
+    
   </section>

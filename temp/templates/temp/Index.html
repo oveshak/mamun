@@ -155,7 +155,7 @@ background: linear-gradient(90deg, rgba(220,53,69,1) 0%, rgba(255,169,8,1) 100%)
 />
                 
                 </a>
-                <p>{{ product.product_description }}</p>
+                <p>{{ product.product_name }}</p>
               </div>
               <div class="ratings"></div>
               <div class="product__price">
@@ -232,98 +232,37 @@ background: linear-gradient(90deg, rgba(220,53,69,1) 0%, rgba(255,169,8,1) 100%)
     </div>
   </div>
 
-  <div class="container-fluid px-3  ">
+  <div class="container-fluid px-3" id="showsssss">
     <div id="container__div">
-      <h1 style="text-align: center; color: #fff" class="heading__h1 mb-5">
-        Here For You
-      </h1>
-      <div class="row ">
-        {% for product in products %}
-        <div class="col-md-2">
-          <div class="shop__product__area">
-            <div class="shop__product__img">
-              <a href="{% url 'single-product' slug=product.slug %}">
-                <img
-  class="w-100 object-cover" 
-  style="height: 200px;" 
-  src="{{ product.product_image.url }}"
-  alt="{{ product.product_name }}"
-/></a>
-              <p>{{product.product_description}}</p>
+        <h1 style="text-align: center; color: #fff" class="heading__h1 mb-5">Here For You</h1>
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-2">
+                <div class="shop__product__area">
+                    <div class="shop__product__img">
+                        <a href="{% url 'single-product' slug=product.slug %}">
+                            <img class="w-100 object-cover" style="height: 200px;" src="{{ product.product_image.url }}" alt="{{ product.product_name }}"/>
+                        </a>
+                        <p>{{ product.product_name }}</p>
+                    </div>
+                    <div class="ratings"></div>
+                    <div class="product__price">
+                        <span>TK {{ product.product_price }} (BDT)</span>
+                    </div>
+                    <div class="addToCart">
+                        {% if product.product_quantity > 0 %}
+                        <button onclick="addToCart('{{ product.id }}', 1)" id="orderNowButton">Order Now</button>
+                        {% else %}
+                        <button disabled>Out of Stock</button>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-            <div class="ratings"></div>
-            <div class="product__price">
-              <span>TK {{product.product_price}} (BDT) </span>
-            </div>
-            <div class="addToCart">
-              {% if product.product_quantity > 0 %}
-              <button onclick="addToCart('{{ product.id }}', 1)" id="orderNowButton">Order Now</button>
-              {% else %}
-              <button disabled>Out of Stock</button>
-              {% endif %}
-          </div>
-          
-          <script>
-            function addToCart(productId, quantity) {
-              const orderNowButton = document.getElementById('orderNowButton');
-              
-              // Disable the button to prevent multiple clicks
-              orderNowButton.disabled = true;
-              orderNowButton.textContent = "Adding...";
-          
-              fetch("{% url 'add_to_cart' %}", {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json',
-                      'X-CSRFToken': '{{ csrf_token }}'
-                  },
-                  body: JSON.stringify({ 'product_id': productId, 'quantity': quantity })
-              })
-              .then(response => response.json())
-              .then(data => {
-                  if (data.message) {
-                      // Show SweetAlert and wait for it to close before reloading
-                      Swal.fire({
-                          position: "center",
-                          icon: "success",
-                          title: "Add Cart Success",
-                          showConfirmButton: false,
-                          timer: 2500
-                      }).then(() => {
-                          // Reload the page after the alert closes
-                          window.location.reload(true);
-                      });
-                  } else {
-                      Swal.fire({
-                          icon: "error",
-                          title: "Oops...",
-                          text: "Error adding product to cart",
-                      });
-                      // Re-enable the button if there's an error
-                      orderNowButton.disabled = false;
-                      orderNowButton.textContent = "Order Now";
-                  }
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-                  Swal.fire({
-                      icon: "error",
-                      title: "Oops...",
-                      text: "An error occurred while adding the product to the cart",
-                  });
-                  // Re-enable the button if there's an error
-                  orderNowButton.disabled = false;
-                  orderNowButton.textContent = "Order Now";
-              });
-          }
-          
-          </script>
-          </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-      </div>
     </div>
-  </div>
+</div>
+
 </div>
 
     <!--Footer  -->
